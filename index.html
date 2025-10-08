@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday Alfiya 🎉</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #ffc0cb, #ffb6c1);
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Floating Hearts Animation */
+    .heart {
+      position: fixed;
+      bottom: -50px;
+      font-size: 1.5rem;
+      opacity: 0.8;
+      animation: floatUp 6s linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-110vh) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    .container {
+      text-align: center;
+      max-width: 90%;
+      width: 500px;
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+      position: relative;
+      z-index: 1;
+      animation: fadeIn 1.2s ease;
+    }
+
+    h1 {
+      color: #e60073;
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+    }
+
+    .message, .shayaris p {
+      color: #ff0066;
+      font-size: 1rem;
+      line-height: 1.5;
+      margin: 10px 0;
+    }
+
+    button {
+      background: #ff4da6;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      font-size: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #e60073;
+    }
+
+    .step {
+      display: none;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .step.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #fireworksCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    /* Final Message */
+    .final-note {
+      font-size: 1rem;
+      color: #d4006e;
+      margin-top: 15px;
+      line-height: 1.6;
+      background: rgba(255,255,255,0.4);
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating Hearts Container -->
+  <div id="hearts-container"></div>
+
+  <div class="container">
+    <!-- STEP 1 -->
+    <div id="step1" class="step active">
+      <h1>🎀 Happy Birthday Alfiya 🎀</h1>
+      <p class="message">
+        Wishing you a day as beautiful as your smile 🌸✨<br>
+        May this year bring you endless happiness & sweet surprises 🎂🎉
+      </p>
+      <button onclick="nextStep(2)">Click for Blessings 💌</button>
+    </div>
+
+    <!-- STEP 2 -->
+    <div id="step2" class="step">
+      <h1>💫 Heartfelt Blessings 💫</h1>
+      <p class="message">
+        🌼 May your life shine brighter with every passing moment ✨<br>
+        💖 Thank you for being such a special part of my life 🌸<br>
+        🙏 Always stay happy, healthy & full of joy!
+      </p>
+      <button onclick="nextStep(3)">Next ➡ Shayaris ❤️</button>
+    </div>
+
+    <!-- STEP 3 -->
+    <div id="step3" class="step">
+      <h1>❤️ Special Shayaris ❤️</h1>
+      <div class="shayaris">
+        <p>🌸 "Zindagi me kuch log aise milte hai,<br>
+        Jo dil me bas jaate hai 💖"</p>
+
+        <p>✨ "Muskura ke dekhna kabhi aaine me,<br>
+        Tumhe khud pe bhi pyaar aa jayega 🪞"</p>
+
+        <p>🥀 "Tera saath ho jaise khushbu hawa me,<br>
+        Har pal mehka deta hai dil 💕"</p>
+      </div>
+      <button onclick="nextStep(4)">🎆 Celebrate 🎉</button>
+    </div>
+
+    <!-- STEP 4 - Final Note -->
+    <div id="step4" class="step">
+      <h1>🎉 Happy Birthday Once Again 🎉</h1>
+      <p class="final-note">
+        Thank you for always being such a wonderful part of my journey 🫶🌸<br>
+        Aise hi hamesha haste raho, chamakte raho ✨<br>
+        Wishing you a year full of smiles & beautiful moments 🎂💖
+      </p>
+    </div>
+  </div>
+
+  <canvas id="fireworksCanvas"></canvas>
+
+  <script>
+    // Step navigation
+    function nextStep(stepNumber) {
+      document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+      document.getElementById('step' + stepNumber).classList.add('active');
+
+      if (stepNumber === 4) startFireworks();
+    }
+
+    // Floating Hearts
+    const heartsContainer = document.getElementById('hearts-container');
+    const heartEmojis = ['💖', '💕', '💓', '💞', '🌸', '❤️'];
+    setInterval(() => {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.fontSize = (Math.random() * 10 + 20) + 'px';
+      heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+      heartsContainer.appendChild(heart);
+      setTimeout(() => heart.remove(), 8000);
+    }, 700);
+
+    // Fireworks
+    const canvas = document.getElementById('fireworksCanvas');
+    const ctx = canvas.getContext('2d');
+    let fireworks = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function Firework(x, y) {
+      this.x = x;
+      this.y = y;
+      this.particles = [];
+      for (let i = 0; i < 50; i++) {
+        this.particles.push({
+          x: x,
+          y: y,
+          angle: Math.random() * 2 * Math.PI,
+          speed: Math.random() * 5 + 2,
+          radius: 2,
+          alpha: 1
+        });
+      }
+    }
+
+    Firework.prototype.update = function () {
+      this.particles.forEach(p => {
+        p.x += Math.cos(p.angle) * p.speed;
+        p.y += Math.sin(p.angle) * p.speed;
+        p.alpha -= 0.01;
+      });
+    };
+
+    Firework.prototype.draw = function () {
+      this.particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, ${Math.floor(Math.random()*100+100)}, ${Math.floor(Math.random()*255)}, ${p.alpha})`;
+        ctx.fill();
+      });
+    };
+
+    function loop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      fireworks.forEach((f, index) => {
+        f.update();
+        f.draw();
+        if (f.particles.every(p => p.alpha <= 0)) {
+          fireworks.splice(index, 1);
+        }
+      });
+      requestAnimationFrame(loop);
+    }
+    loop();
+
+    function startFireworks() {
+      const interval = setInterval(() => {
+        fireworks.push(new Firework(Math.random() * canvas.width, Math.random() * canvas.height / 1.5));
+      }, 300);
+      setTimeout(() => clearInterval(interval), 8000);
+    }
+  </script>
+</body>
+</html>
